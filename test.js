@@ -9,7 +9,7 @@ const port = 80
 const app = express()
 
 app.set('view engine', 'hbs')
-app.set('views',__dirname +'/views')
+app.set('views',__dirname +"/views")
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -39,6 +39,7 @@ app.post('/submit', async (req,res)=>{
     const h5 = $('h5').text();
     const h6 = $('h6').text();
     const p = $('p').text();
+    const meta = $('meta').text();
 
     const filePath = path.join(__dirname, 'website', `${title}.html`);
     fs.writeFile(filePath, link.data,(err)=>{
@@ -47,12 +48,15 @@ app.post('/submit', async (req,res)=>{
         const filePath = path.join(__dirname, 'website', "error.html");
         fs.writeFile(filePath, link.data,(err)=>{
           console.log('damm, this is the second error :(')
-          res.render('main',{title,h1,h2,h3,h4,h5,h6,p,filePath,link})
+          res.render('main',{title,h1,h2,h3,h4,h5,h6,p,meta,filePath,link,test:test()})
         })
         console.log("file available as error.html",err)
       }
       else{
-        res.render('main',{title,h1,h2,h3,h4,h5,h6,p,filePath,link})
+        function test(){
+          res.sendFile(filePath)
+        }
+        res.render('main',{title,h1,h2,h3,h4,h5,h6,p,meta,filePath,link,test:test})
         // res.sendFile(filePath);
       }
     })
