@@ -44,6 +44,12 @@ app.post('/submit', async (req,res)=>{
     fs.writeFile(filePath, link.data,(err)=>{
       if (err){
         console.log(`ERROR OCCURRED: ${err}`)
+        const filePath = path.join(__dirname, 'website', "error.html");
+        fs.writeFile(filePath, link.data,(err)=>{
+          console.log('damm, this is the second error :(')
+          res.render('main',{title,h1,h2,h3,h4,h5,h6,p,filePath,link})
+        })
+        console.log("file available as error.html",err)
       }
       else{
         res.render('main',{title,h1,h2,h3,h4,h5,h6,p,filePath,link})
