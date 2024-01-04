@@ -32,6 +32,13 @@ app.post('/submit', async (req,res)=>{
     
     const $ = cheerio.load(link.data);
     const title = $('title').text();
+    const h1 = $('h1').text();
+    const h2 = $('h2').text();
+    const h3 = $('h3').text();
+    const h4 = $('h4').text();
+    const h5 = $('h5').text();
+    const h6 = $('h6').text();
+    const p = $('p').text();
 
     const filePath = path.join(__dirname, 'website', `${title}.html`);
     fs.writeFile(filePath, link.data,(err)=>{
@@ -39,7 +46,8 @@ app.post('/submit', async (req,res)=>{
         console.log(`ERROR OCCURRED: ${err}`)
       }
       else{
-        res.sendFile(filePath);
+        res.render('main',{title,h1,h2,h3,h4,h5,h6,p,filePath,link})
+        // res.sendFile(filePath);
       }
     })
     
