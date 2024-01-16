@@ -19,6 +19,8 @@ app.get('/',(req,res)=>{
     username:"Aditya",
     age:21
   }
+  console.log(user.username)
+  console.log(user.age)
   res.render('index',{user})
 })
 
@@ -48,7 +50,7 @@ app.post('/submit', async (req,res)=>{
         const filePath = path.join(__dirname, 'website', "error.html");
         fs.writeFile(filePath, link.data,(err)=>{
           console.log('damm, this is the second error :(')
-          res.render('main',{title,h1,h2,h3,h4,h5,h6,p,meta,filePath,link,test:test()})
+          res.render('main',{title,h1,h2,h3,h4,h5,h6,p,meta,filePath,link,test:test})
         })
         console.log("file available as error.html",err)
       }
@@ -64,7 +66,8 @@ app.post('/submit', async (req,res)=>{
   }
   catch(err){
     console.log(`ERROR OCCURRED: ${err}`)
-    res.status(400).send('Bad Request');
+    // res.status(400).send('Bad Request');
+    res.render('main',{err})
   }  
 
   
